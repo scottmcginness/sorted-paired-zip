@@ -1,6 +1,6 @@
 {
   "name": "sorted-paired-zip",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides a function which zips array elements together in pairs using a custom sort function",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,9 @@
     "sort"
   ],
   "author": "Scott McGinness",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scottmcginness/sorted-paired-zip.git"
+  }
 }
