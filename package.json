@@ -1,0 +1,19 @@
+{
+  "name": "sorted-paired-zip",
+  "version": "1.0.0",
+  "description": "Provides a function which zips array elements together in pairs using a custom sort function",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "zip",
+    "array",
+    "sort"
+  ],
+  "author": "Scott McGinness",
+  "license": "MIT"
+}
