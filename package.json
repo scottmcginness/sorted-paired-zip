@@ -1,6 +1,6 @@
 {
   "name": "sorted-paired-zip",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Provides a function which zips array elements together in pairs using a custom sort function",
   "main": "index.js",
   "scripts": {

@@ -1,18 +1,11 @@
 // @ts-check
-/**
- * @template T
- * @callback SortFunction<T>
- * @param {T} x
- * @param {T} y
- * @returns {number}
- */
 
 /**
- *
+ * Zips two lists together, matching elements by a sorting function, and putting null if there is a mismatch on either list.
  * @template T
- * @param {Readonly<T[]>} leftUnsorted
- * @param {Readonly<T[]>} rightUnsorted
- * @param {SortFunction<T>} sorter
+ * @param {Readonly<T[]> | T[]} leftUnsorted - The elements to be zipped in the left-hand position.
+ * @param {Readonly<T[]> | T[]} rightUnsorted - The elements to be zipped in the right-hand position.
+ * @param {((l: T, r: T) => number)} sorter - The comparison function which sorts the elements.
  * @yields {[T | null, T | null]}
  * @returns {Generator<[T | null, T | null], void, undefined>}
  * @example
@@ -64,9 +57,9 @@ function* sortedPairedZipGenerator(leftUnsorted, rightUnsorted, sorter) {
 /**
  * Zips two lists together, matching elements by a sorting function, and putting null if there is a mismatch on either list.
  * @template T
- * @param {Readonly<T[]>} leftUnsorted
- * @param {Readonly<T[]>} rightUnsorted
- * @param {SortFunction<T>} sorter
+ * @param {Readonly<T[]> | T[]} leftUnsorted - The elements to be zipped in the left-hand position.
+ * @param {Readonly<T[]> | T[]} rightUnsorted - The elements to be zipped in the right-hand position.
+ * @param {((l: T, r: T) => number)} sorter - The comparison function which sorts the elements.
  * @returns {[T | null, T | null][]}
  * @example
  * const sorter = (x, y) => x.localeCompare(y);
