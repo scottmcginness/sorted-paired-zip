@@ -16,7 +16,7 @@ declare module 'sorted-paired-zip' {
    *   [...sortedPairedZipGenerator([4, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8], sorter)]
    *   // => [[null, 1], [null, 2], [null, 3], [4, 4], [null, 5], [null, 6], [7, 7], [8, 8]];
    */
-  function* sortedPairedZipGenerator<T>(
+  function sortedPairedZipGenerator<T>(
     leftUnsorted: Readonly<T[]> | T[],
     rightUnsorted: Readonly<T[]> | T[],
     sorter: (l: T, r: T) => number
