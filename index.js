@@ -18,8 +18,8 @@
  *   // => [[null, 1], [null, 2], [null, 3], [4, 4], [null, 5], [null, 6], [7, 7], [8, 8]];
  */
 function* sortedPairedZipGenerator(leftUnsorted, rightUnsorted, sorter) {
-    const left = [...leftUnsorted].sort();
-    const right = [...rightUnsorted].sort();
+    const left = [...leftUnsorted].sort(sorter);
+    const right = [...rightUnsorted].sort(sorter);
 
     let i = 0;
     let j = 0;

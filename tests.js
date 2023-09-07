@@ -8,33 +8,37 @@ const { sortedPairedZip } = require(".");
  * @param {number} n
  * @param {boolean | undefined} debug
  */
-const test = (left, right, expected, n, debug) => {
+const test = (left, right, sorter, expected, n, equality, debug) => {
     if (debug) {
         debugger;
     }
 
+    if (!equality) {
+        equality = (x, y) => x === y;
+    }
+
     /** @type {((x: string, y: string) => number)} */
-    const sorter = (x, y) => x.localeCompare(y);
-    const result = sortedPairedZip(left, right, sorter);
+    const defaultSorter = (x, y) => x.localeCompare(y);
+    const result = sortedPairedZip(left, right, sorter || defaultSorter);
 
     if (result.length !== expected.length) {
-        throw new Error(`lengths did not match on test #${n}`);
+        throw new Error(`lengths did not match on test #${n}: ${JSON.stringify(result)}`);
     }
 
     expected.forEach(([l, r], i) => {
-        if (l !== result[i][0]) {
-            throw new Error(`left side did not match on test #${n} at index ${i}`);
+        if (!equality(l, result[i][0])) {
+            throw new Error(`left side did not match on test #${n} at index ${i}: ${JSON.stringify(l)} != ${JSON.stringify(result[i][0])}`);
         }
 
-        if (r !== result[i][1]) {
-            throw new Error(`right side did not match on test #${n} at index ${i}`);
+        if (!equality(r, result[i][1])) {
+            throw new Error(`right side did not match on test #${n} at index ${i}: ${JSON.stringify(r)} != ${JSON.stringify(result[i][1])}`);
         }
     });
 
     console.log(`test #${n} passed`);
 };
 
-/** @type {{ left: string[], right: string[], expected: [string | null, string | null][], debug?: boolean, only?: boolean }[]} */
+/** @type {{ left: any[], right: any[], sorter?: any, expected: [any, any][], equality?: any, debug?: boolean, only?: boolean }[]} */
 const suite = [
     {
         left: [],
@@ -101,6 +105,13 @@ const suite = [
         left: ['a', 'a', 'b'],
         right: ['a', 'c', 'd'],
         expected: [['a', 'a'], ['a', null], ['b', null], [null, 'c'], [null, 'd']]
+    },
+    {
+        left: [{ name: 'a', value: 'val' }, { name: 'b', value: 'val' }],
+        right: [{ name: 'b', value: 'val' }, { name: 'a', value: 'other' }],
+        sorter: (x, y) => x.name.localeCompare(y.name),
+        expected: [[{ name: 'a', value: 'val' }, { name: 'a', value: 'other' }], [{ name: 'b', value: 'val' }, { name: 'b', value: 'val' }]],
+        equality: (x, y) => x.name === y.name && x.value === y.value
     }
 ];
 
@@ -111,7 +122,7 @@ const runSuite = () => {
 
     (only ? [only] : suite).forEach((s, i) => {
         try {
-            test(s.left, s.right, s.expected, i + 1, s.debug);
+            test(s.left, s.right, s.sorter, s.expected, i + 1, s.equality, s.debug);
         } catch (e) {
             fails += 1;
             console.error(e);
